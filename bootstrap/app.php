@@ -13,10 +13,15 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        // TODO
-        // REGISTER YOUR MIDDLEWARES HERE
-        // YOU CAN USE ALIAS, AND REMEMBER THE PRIORITIZATION OF APPLYING MIDDLEWARES
+        $middleware->use([
+            GlobalMiddleware::class,
+        ]);
+
+        $middleware->alias([
+            'auth.user' => RouteMiddleware::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })->create();
+
